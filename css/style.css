@@ -206,6 +206,7 @@
 		header.major h2 {
 			font-size: 3em;
 			margin-bottom: 0.5em;
+			text-align: left;
 		}
 
 		header.major p {
@@ -1249,7 +1250,7 @@
 
 .modalDialog > div {
 	width: 500px;
-    height: 600px;
+    height: 300px;
 	position: relative;
 	margin: 10% auto;
 	padding: 5px 10px 13px 20px;

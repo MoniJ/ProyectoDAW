@@ -35,13 +35,11 @@
                         <div id="openModal" class="modalDialog">
 	                           <div>
                                     <a href="#close" title="Close" class="close">X</a>
-                                    <h2>Log In</h2>
+                                    <h3>Log In</h3>
                                     <section class ="main">
 										<form action="controlador.php" method="POST" id="formulario">
 											<input type="text" placeholder="usuario" name="txtusuario" />
-											<br>
 											<input type="password" placeholder="pass" name="txtpassword" />
-											<br>
 											<input type="submit" value="submit" name="entrar" />
 										</form>
                                 </section>
@@ -61,24 +59,19 @@
 					<li>
 						<a href="#openModal1" class="button big">Registrate</a>
 					</li>
-					<div id="openModal1" class="modalDialog">
+					<div id="openModal1" class="modalDialog2">
 	                           <div>
                                     <a href="#close" title="Close" class="close">X</a>
-                                    <h2>Registrate</h2>
+                                    <h3>Registrate</h3>
                                     <section class ="main">
 										<form action="controlador.php" method="POST" id="registro">
 											<input type="text" placeholder="Nombre" name="txtnombre" />
-											<br>
 											<input type="text" placeholder="Correo" name="txtcorreo" />
-											<br>
-											<input type="number" placeholder="Edad" name="txtnumber" />
-											<br>
-											<input type="number" placeholder="Peso" name="txtpeso" />
-											<br>
+											<input type="text" placeholder="Edad" name="txtnumber" />
+											<input type="text" placeholder="Peso en kg" name="txtpeso" />
 											<input type="password" placeholder="Password" name="txtpassword" />
-											<br>
 											<input type="password" placeholder="Vuelve a ingresar Passwords" name="txtpassword2" />
-											<br>
+                                            <br>
 											<input type="submit" value="submit" name="entrar" />
 										</form>
                                 </section>

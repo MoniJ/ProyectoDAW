@@ -1,3 +1,10 @@
+<?php
+include('login.php'); // Includes Login Script
+
+if(isset($_SESSION['login_user'])){
+header("location: profile.php");
+}
+?>
 <!DOCTYPE html>
 <!--
 	Transit by TEMPLATED
@@ -7,7 +14,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Transit by TEMPLATED</title>
+		<title>Proyecto 2</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
@@ -35,14 +42,18 @@
                         <div id="openModal" class="modalDialog">
 	                           <div>
                                     <a href="#close" title="Close" class="close">X</a>
+								                              <section class ="main">
+								   <div id="login">
                                     <h3>Log In</h3>
-                                    <section class ="main">
-										<form action="controlador.php" method="POST" id="formulario">
-											<input type="text" placeholder="usuario" name="txtusuario" />
-											<input type="password" placeholder="pass" name="txtpassword" />
-											<input type="submit" value="submit" name="entrar" />
+         
+										<form action="" method="POST" id="formulario">
+											<input id="name" type="text" placeholder="usuario" name="username" />
+											<input id="password" type="password" placeholder="pass" name="password" />
+											<input type="submit" value="Log In" name="submit" />
+											<span><?php echo $error; ?></span>
 										</form>
                                 </section>
+									   </div>
                             </div>
                         </div>
 					</ul>

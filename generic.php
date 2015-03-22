@@ -6,6 +6,7 @@
 -->
 
 <?php
+	include('session.php');
     function createDatabaseConnection($servername, $username, $password, $dbname){
         // Create connection
         $connection = mysqli_connect($servername, $username, $password, $dbname);
@@ -25,7 +26,8 @@
         if (mysqli_num_rows($result) > 0) {
             // output data of each row
             while($row = mysqli_fetch_assoc($result)) {
-                echo "<li id=\"". $row["id"]."a\" draggable=\"true\" ondragstart=\"drag(event)\">" . $row["name"]. "</li>";
+                echo "<li id=\"". $row["id"]."a\" draggable=\"true\" ondragstart=\"drag(event)\">" . $row["name"]. 
+                     "<img src=\"images/orange.png\" alt=\"\" id=\"foodImg\" draggable=\"false\"/></li>";
             }
         } else {
             echo "0 results";
@@ -35,13 +37,13 @@
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "food";
+    $dbname = "proyecto2";
     $connection = createDatabaseConnection($servername, $username, $password, $dbname);
 ?>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Generic - Transit by TEMPLATED</title>
+		<title>Food</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
@@ -75,21 +77,32 @@
             function drop(ev) {
                 ev.preventDefault();
                 var data = ev.dataTransfer.getData("text");
+                var name = ev.target.id;
                 var itm = document.getElementById(data);
                 var cln = itm.cloneNode(true);
                 var elem = document.createElement("img");
                 elem.setAttribute("src", "http://static.tumblr.com/84d2f4dd4634b16ccac1e14e11f72fae/rv80fwi/Dain748yi/tumblr_static_9fg10i6brsw0w40wskk0skg8w.png");
                 elem.setAttribute("id", "deleteElement");
-                elem.setAttribute("onclick", "deleteElement("+id+")");
+                //elem.setAttribute("onclick", "deleteElement("+id+")");
+                elem.class = id;
+                elem.onclick = function(id){deleteElement(id);};
+                elem.setAttribute("draggable", "false");
                 cln.id=id;
                 id++;
                 cln.draggable=false;
                 cln.ondragstart="";
                 cln.appendChild(elem);
-                document.getElementById("foodSelections").appendChild(cln);
+                if(name==="breakfast"){
+                    document.getElementById("foodSelectionsBreakfast").appendChild(cln);
+                }else if(name==="lunch"){
+                    document.getElementById("foodSelectionsLunch").appendChild(cln);
+                }else if(name==="dinner"){
+                    document.getElementById("foodSelectionsDinner").appendChild(cln);
+                }     
             }
             
             function deleteElement(id){
+                var id = event.target.class;
                 return (elem=document.getElementById(id)).parentNode.removeChild(elem);
             }
             function displayList(){
@@ -108,18 +121,21 @@
         </script>
 	</head>
 	<body>
-
-		<!-- Header -->
 			<header id="header">
-				<h1><a href="index.html">Transit</a></h1>
+				<div id="profile">
+
+				<h1><a href="profile.php">Welcome : <i><?php echo $login_session; ?></i></h1>
+				<!--<h1><a href="index.html">Transit</a></h1>!-->
 				<nav id="nav">
 					<ul>
-						<li><a href="index.html">Home</a></li>
+						<li><a href="index.php">Home</a></li>
 						<li><a href="generic.php">Comida</a></li>
 						<li><a href="elements.html">IMC</a></li>
-						<li><a href="#" class="button special">Sign Up</a></li>
+						<li><a href="logout.php" class="button special">Log Out</a></li>
+						<!--<li><b id="logout" class="button special"><a href="logout.php">Log Out</a></b></li>!-->
 					</ul>
 				</nav>
+				</div>
 			</header>
 
 		<!-- Main -->
@@ -127,27 +143,41 @@
 				<div class="container">
 
 					<header class="major">
-						<h2>Calcula cuentas calorías ingeriste hoy</h2>
+						<h2>Calcula cuantas calorías ingeriste hoy</h2>
 					</header>
                         <div class="table-wrapper">
                             <table class="alt">
                                 <thead>
                                     <tr>
                                         <th>¿Qué comiste hoy?</th>
-                                        <th>Comida</th>
+                                        <th>Grupos de alimentos</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><div id=myDiv ondrop="drop(event)" ondragover="allowDrop(event)">
-                                            <ul id="foodSelections"></ul>
-                                            </div></td>
+                                        <td>
+                                            <h5>Desayuno</h5>
+                                            <div id=breakfast ondrop="drop(event)" ondragover="allowDrop(event)">
+                                                <ul id="foodSelectionsBreakfast"></ul>
+                                            </div>
+                                            <br><h5>Comida</h5>
+                                            <div id=lunch ondrop="drop(event)" ondragover="allowDrop(event)">
+                                            <ul id="foodSelectionsLunch"></ul>
+                                            </div>
+                                            <br><h5>Cena</h5>
+                                            <div id=dinner ondrop="drop(event)" ondragover="allowDrop(event)">
+                                            <ul id="foodSelectionsDinner"></ul>
+                                            </div>
+                                        </td>
                                         <td>
                                         <div id="tabs">
                                           <ul>
-                                            <li><a href="#tabs-1">Frutas</a></li>
-                                            <li><a href="#tabs-2">Vegetales</a></li>
-                                            <li><a href="#tabs-3">Proteínas</a></li>
+                                            <li><a href="#tabs-1">Productos de origen animal</a></li>
+                                            <li><a href="#tabs-2">Proteínas con grasa</a></li>
+                                            <li><a href="#tabs-3">Cereales</a></li>
+                                            <li><a href="#tabs-4">Frutas</a></li>
+                                            <li><a href="#tabs-5">Verduras</a></li>
+                                            <li><a href="#tabs-6">Lácteos</a></li>
                                           </ul>
                                           <div id="tabs-1">
                                             <ul id="foodOptions">
@@ -164,6 +194,24 @@
                                           <div id="tabs-3">
                                             <ul id="foodOptions">
                                                 <?php $sql = "SELECT id, name FROM food WHERE type=3";
+                                                  showDatabaseElement($connection, $sql);?>
+                                            </ul>
+                                          </div>
+                                          <div id="tabs-4">
+                                            <ul id="foodOptions">
+                                                <?php $sql = "SELECT id, name FROM food WHERE type=4";
+                                                  showDatabaseElement($connection, $sql);?>
+                                            </ul>
+                                          </div>
+                                          <div id="tabs-5">
+                                            <ul id="foodOptions">
+                                                <?php $sql = "SELECT id, name FROM food WHERE type=5";
+                                                  showDatabaseElement($connection, $sql);?>
+                                            </ul>
+                                          </div>
+                                          <div id="tabs-6">
+                                            <ul id="foodOptions">
+                                                <?php $sql = "SELECT id, name FROM food WHERE type=6";
                                                   showDatabaseElement($connection, $sql);?>
                                             </ul>
                                           </div>
